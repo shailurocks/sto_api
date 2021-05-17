@@ -4,13 +4,13 @@ import { DbConfig } from './db';
 
 @Injectable()
 export class ConfigService {
-    // get sequelizeMasterConfig(): SequelizeOptions {
-    //     return DbConfig.masterdb;
-    // }
+    get sequelizeMasterConfig(): SequelizeOptions {
+        return DbConfig.masterdb;
+    }
 
-    // get sequelizeSlaveConfig(): SequelizeOptions {
-    //     return DbConfig.slavedb;
-    // }
+    get sequelizeSlaveConfig(): SequelizeOptions {
+        return DbConfig.slavedb;
+    }
 
     get sequelizeDefaultConfig(): SequelizeOptions {
         return DbConfig.default;

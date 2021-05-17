@@ -12,26 +12,26 @@ export const databaseProviders = [
         },
         inject: [ConfigService],
     },
-    // {
-    //     provide: 'SEQUELIZE_MASTER',
-    //     useFactory: async (configService: ConfigService) => {
-    //         const sequelize = new Sequelize(
-    //             configService.sequelizeMasterConfig,
-    //         );
-    //         sequelize.addModels([]);
-    //         // await sequelize.sync();
-    //         return sequelize;
-    //     },
-    //     inject: [ConfigService],
-    // },
-    // {
-    //     provide: 'SEQUELIZE_SLAVE',
-    //     useFactory: async (configService: ConfigService) => {
-    //         const sequelize = new Sequelize(configService.sequelizeSlaveConfig);
-    //         sequelize.addModels([]);
-    //         // await sequelize.sync();
-    //         return sequelize;
-    //     },
-    //     inject: [ConfigService],
-    // },
+    {
+        provide: 'SEQUELIZE_MASTER',
+        useFactory: async (configService: ConfigService) => {
+            const sequelize = new Sequelize(
+                configService.sequelizeMasterConfig,
+            );
+            sequelize.addModels([]);
+            // await sequelize.sync();
+            return sequelize;
+        },
+        inject: [ConfigService],
+    },
+    {
+        provide: 'SEQUELIZE_SLAVE',
+        useFactory: async (configService: ConfigService) => {
+            const sequelize = new Sequelize(configService.sequelizeSlaveConfig);
+            sequelize.addModels([]);
+            // await sequelize.sync();
+            return sequelize;
+        },
+        inject: [ConfigService],
+    },
 ];
