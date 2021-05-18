@@ -1,5 +1,6 @@
 import { Injectable , Inject } from '@nestjs/common';
 import { from } from 'rxjs';
+import { databaseProviders } from 'src/common/database/database.providers';
 import * as _  from 'underscore';
 import { DbServiceService } from '../db-service/db-service.service';
 import { ApiService } from '../shared/http/http.service';
@@ -35,5 +36,35 @@ export class OrdersService {
             console.log(err);
             return [];
         }    
+    }
+
+    async createorder(args: any):Promise<Object>{
+        let data: Object = {};
+        //table name
+        let table_name: string = 'procurement_po';
+
+        let sql: string = "insert into "+table_name;
+
+        //get column name
+        let columns: string[] = Object.keys(args);
+        let insert_column_name: string = '`'+columns.join('`, `')+'`';
+        let insert_bind_param: string = ':'+columns.join(',:');
+
+        //create queryParams value array
+        let queryParams: Object = {};
+        for (let [key, value] of Object.entries(args)) {
+            queryParams[key] = value;
+        }
+
+        sql += "("+insert_column_name+") values ("+insert_bind_param+")";
+
+        let order_data: Object = await this.DbServiceService.insertRecordIntoDb(sql , queryParams);
+        if(!_.isEmpty(order_data)){
+            data["order_id"] = order_data[0];
+        }else{
+            data["order_id"] = "";
+        }
+        
+        return data;
     }
 }
