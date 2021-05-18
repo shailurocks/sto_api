@@ -8,6 +8,11 @@ export class DbServiceService {
     ) {}
 
     async getRecordFromDb(query: string, replacements?:Object): Promise<Array<Object>> {
-        return await this.sequelizeInstance.query(query, { type: QueryTypes.SELECT, replacements:replacements });
+        try{
+            return await this.sequelizeInstance.query(query, { type: QueryTypes.SELECT, replacements:replacements });
+        }catch(err){
+            console.error(err);
+            return [];
+        }
     }
 }
